@@ -33,6 +33,7 @@ private fun BaseCheckButton(
     useUnderline: Boolean = false,
     child: @Composable () -> Unit = {},
     onToggle: () -> Unit,
+    onCreate: (CheckButton) -> Unit = {},
 ) {
     var pendingChange by remember { mutableStateOf(0) }
     ComposeNode<GtkCheckButton, GtkApplier>(
@@ -58,6 +59,9 @@ private fun BaseCheckButton(
                     this.widget.active = active
                     this.toggled?.unblock()
                 }
+            }
+            set(onCreate) {
+                it(this.widget)
             }
         },
         content = child
@@ -119,6 +123,39 @@ fun CheckButton(
         useUnderline = useUnderline,
         onToggle = onToggle,
     )
+}
+
+@Composable
+fun RadioButton(
+    modifier: Modifier = Modifier,
+    active: Boolean,
+    label: String,
+    inconsistent: Boolean = false,
+    useUnderline: Boolean = false,
+    onToggle: () -> Unit,
+) {
+    var gtkCheckButton by remember { mutableStateOf<CheckButton?>(null) }
+    val gtkCheckButtonLeader by remember { mutableStateOf(CheckButton()) }
+
+    BaseCheckButton(
+        modifier = modifier,
+        active = active,
+        inconsistent = inconsistent,
+        label = label,
+        useUnderline = useUnderline,
+        onToggle = onToggle,
+        onCreate = { checkButton ->
+            gtkCheckButton = checkButton
+        }
+    )
+
+    DisposableEffect(Unit) {
+        val cb = gtkCheckButton
+        cb?.setGroup(gtkCheckButtonLeader)
+        onDispose {
+            cb?.setGroup(null)
+        }
+    }
 }
 
 /**
