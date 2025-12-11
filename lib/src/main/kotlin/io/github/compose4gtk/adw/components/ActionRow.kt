@@ -72,12 +72,12 @@ private fun <W : GtkComposeWidget<AdwActionRow>> BaseActionRow(
     creator: () -> W,
     updater: Updater<W>.() -> Unit,
     title: String,
-    subtitle: String,
     modifier: Modifier = Modifier,
     activatable: Boolean = true,
     titleSelectable: Boolean = false,
     useMarkup: Boolean = true,
     useUnderline: Boolean = false,
+    subtitle: String? = null,
     subtitleLines: Int = 0,
     subtitleSelectable: Boolean = false,
     titleLines: Int = 0,
@@ -87,12 +87,12 @@ private fun <W : GtkComposeWidget<AdwActionRow>> BaseActionRow(
         factory = creator,
         update = {
             set(title) { this.widget.title = it }
-            set(subtitle) { this.widget.subtitle = it }
             set(modifier) { applyModifier(it) }
             set(activatable) { this.widget.activatable = it }
             set(titleSelectable) { this.widget.titleSelectable = it }
             set(useMarkup) { this.widget.useMarkup = it }
             set(useUnderline) { this.widget.useUnderline = it }
+            set(subtitle) { this.widget.subtitle = it }
             set(subtitleLines) { this.widget.subtitleLines = it }
             set(subtitleSelectable) { this.widget.subtitleSelectable = it }
             set(titleLines) { this.widget.titleLines = it }
@@ -180,7 +180,6 @@ private fun Suffix(
  * preferences/settings inside and application.
  *
  * @param title The title for this row.
- * @param subtitle The subtitle for this row.
  * @param modifier Compose [Modifier] for layout and styling.
  * @param prefix Composable components displayed at the start of the row.
  * @param suffix Composable components displayed at the end of the row.
@@ -188,6 +187,7 @@ private fun Suffix(
  * @param activatable Whether the component can be activated.
  * @param useMarkup Whether to use Pango markup for the title and subtitle.
  * @param useUnderline Whether an embedded underline in the title or subtitle indicates a mnemonic.
+ * @param subtitle The subtitle for this row.
  * @param subtitleLines The number of lines at the end of which the subtitle label will be ellipsized.
  * @param subtitleSelectable Whether the subtitle is selectable.
  * @param titleLines The number of lines at the end of which the title label will be ellipsized.
@@ -195,7 +195,6 @@ private fun Suffix(
 @Composable
 fun ActionRow(
     title: String,
-    subtitle: String,
     modifier: Modifier = Modifier,
     prefix: @Composable ActionRowSlotScope.() -> Unit = {},
     suffix: @Composable ActionRowSlotScope.() -> Unit = {},
@@ -204,6 +203,7 @@ fun ActionRow(
     titleSelectable: Boolean = false,
     useMarkup: Boolean = true,
     useUnderline: Boolean = false,
+    subtitle: String? = null,
     subtitleLines: Int = 0,
     subtitleSelectable: Boolean = false,
     titleLines: Int = 0,
@@ -216,12 +216,12 @@ fun ActionRow(
             set(onActivate) { this.widget.onActivated { onActivate() } }
         },
         title = title,
-        subtitle = subtitle,
         modifier = modifier,
         activatable = activatable,
         titleSelectable = titleSelectable,
         useMarkup = useMarkup,
         useUnderline = useUnderline,
+        subtitle = subtitle,
         subtitleLines = subtitleLines,
         subtitleSelectable = subtitleSelectable,
         titleLines = titleLines,
@@ -248,13 +248,13 @@ private class AdwSwitchRowComposeNode(gObject: AdwSwitchRow) : LeafComposeNode<A
  *
  * @param active Whether the switch is active.
  * @param title The title for this row.
- * @param subtitle The subtitle for this row.
  * @param modifier Compose [Modifier] for layout and styling.
  * @param onActivate Callback triggered when this row is activated.
  * @param activatable Whether the component can be activated.
  * @param titleSelectable Whether the title is selectable.
  * @param useMarkup Whether to use Pango markup for the title and subtitle.
  * @param useUnderline Whether an embedded underline in the title or subtitle indicates a mnemonic.
+ * @param subtitle The subtitle for this row.
  * @param subtitleLines The number of lines at the end of which the subtitle label will be ellipsized.
  * @param subtitleSelectable Whether the subtitle is selectable.
  * @param titleLines The number of lines at the end of which the title label will be ellipsized.
@@ -263,13 +263,13 @@ private class AdwSwitchRowComposeNode(gObject: AdwSwitchRow) : LeafComposeNode<A
 fun SwitchRow(
     active: Boolean,
     title: String,
-    subtitle: String,
     modifier: Modifier = Modifier,
     onActivate: () -> Unit = {},
     activatable: Boolean = true,
     titleSelectable: Boolean = false,
     useMarkup: Boolean = true,
     useUnderline: Boolean = false,
+    subtitle: String? = null,
     subtitleLines: Int = 0,
     subtitleSelectable: Boolean = false,
     titleLines: Int = 0,
@@ -298,12 +298,12 @@ fun SwitchRow(
             }
         },
         title = title,
-        subtitle = subtitle,
         modifier = modifier,
         activatable = activatable,
         titleSelectable = titleSelectable,
         useMarkup = useMarkup,
         useUnderline = useUnderline,
+        subtitle = subtitle,
         subtitleLines = subtitleLines,
         subtitleSelectable = subtitleSelectable,
         titleLines = titleLines,
@@ -318,13 +318,13 @@ private class AdwComboRowComposeNode(gObject: AdwComboRow) : LeafComposeNode<Adw
  * @param items The list of string options to display in the combo box.
  * @param selectedIndex The index of the currently selected item.
  * @param title The title displayed on the row.
- * @param subtitle Optional subtitle displayed below the title.
  * @param modifier Compose [Modifier] for layout and styling.
  * @param onSelectedChange Callback invoked when the selected item changes, providing the new index.
  * @param activatable Whether the row can be activated (affects focus and accessibility).
  * @param titleSelectable Whether the user can select the title text.
  * @param useMarkup Whether the title and subtitle use Pango markup.
  * @param useUnderline Whether an underscore in the title or subtitle indicates a mnemonic.
+ * @param subtitle Optional subtitle displayed below the title.
  * @param subtitleLines The number of lines after which the subtitle is ellipsized (0 = no limit).
  * @param subtitleSelectable Whether the user can select the subtitle text.
  * @param titleLines The number of lines after which the title is ellipsized (0 = no limit).
@@ -334,13 +334,13 @@ fun ComboRow(
     items: List<String>,
     selectedIndex: Int,
     title: String,
-    subtitle: String,
     onSelectedChange: (Int) -> Unit,
     modifier: Modifier = Modifier,
     activatable: Boolean = true,
     titleSelectable: Boolean = false,
     useMarkup: Boolean = true,
     useUnderline: Boolean = false,
+    subtitle: String? = null,
     subtitleLines: Int = 0,
     subtitleSelectable: Boolean = false,
     titleLines: Int = 0,
@@ -376,12 +376,12 @@ fun ComboRow(
             }
         },
         title = title,
-        subtitle = subtitle,
         modifier = modifier,
         activatable = activatable,
         titleSelectable = titleSelectable,
         useMarkup = useMarkup,
         useUnderline = useUnderline,
+        subtitle = subtitle,
         subtitleLines = subtitleLines,
         subtitleSelectable = subtitleSelectable,
         titleLines = titleLines,
@@ -394,12 +394,12 @@ fun ComboRow(
  * @param onSelectedChange Callback invoked when the selected item changes, providing the new [T] instance.
  * @param item Composable used to render each item in the dropdown list.
  * @param title The title displayed on the row.
- * @param subtitle Optional subtitle displayed below the title.
  * @param modifier Compose [Modifier] for layout and styling.
  * @param activatable Whether the row can be activated (affects focus and accessibility).
  * @param titleSelectable Whether the user can select the title text.
  * @param useMarkup Whether the title and subtitle use Pango markup.
  * @param useUnderline Whether an underscore in the title or subtitle indicates a mnemonic.
+ * @param subtitle Optional subtitle displayed below the title.
  * @param subtitleLines The number of lines after which the subtitle is ellipsized (0 = no limit).
  * @param subtitleSelectable Whether the user can select the subtitle text.
  * @param titleLines The number of lines after which the title is ellipsized (0 = no limit).
@@ -412,12 +412,12 @@ fun <T : GObject> ComboRow(
     onSelectedChange: (selectedItem: T) -> Unit,
     item: @Composable (T) -> Unit,
     title: String,
-    subtitle: String,
     modifier: Modifier = Modifier,
     activatable: Boolean = true,
     titleSelectable: Boolean = false,
     useMarkup: Boolean = true,
     useUnderline: Boolean = false,
+    subtitle: String? = null,
     subtitleLines: Int = 0,
     subtitleSelectable: Boolean = false,
     titleLines: Int = 0,
@@ -454,12 +454,12 @@ fun <T : GObject> ComboRow(
             }
         },
         title = title,
-        subtitle = subtitle,
         modifier = modifier,
         activatable = activatable,
         titleSelectable = titleSelectable,
         useMarkup = useMarkup,
         useUnderline = useUnderline,
+        subtitle = subtitle,
         subtitleLines = subtitleLines,
         subtitleSelectable = subtitleSelectable,
         titleLines = titleLines,
@@ -479,7 +479,6 @@ private class AdwSpinRowComposeNode(gObject: AdwSpinRow) : LeafComposeNode<AdwSp
  *
  * @param value Number displayed in the component.
  * @param title The title for this row.
- * @param subtitle The subtitle for this row.
  * @param modifier Compose [Modifier] for layout and styling.
  * @param onActivate Callback triggered when the component is activated (pressing "enter").
  * @param onValueChange Callback triggered when the value changes.
@@ -494,6 +493,7 @@ private class AdwSpinRowComposeNode(gObject: AdwSpinRow) : LeafComposeNode<AdwSp
  * @param titleSelectable Whether the title is selectable.
  * @param useMarkup Whether to use Pango markup for the title and subtitle.
  * @param useUnderline Whether an embedded underline in the title or subtitle indicates a mnemonic.
+ * @param subtitle The subtitle for this row.
  * @param subtitleLines The number of lines at the end of which the subtitle label will be ellipsized.
  * @param subtitleSelectable Whether the subtitle is selectable.
  * @param titleLines The number of lines at the end of which the title label will be ellipsized.
@@ -502,7 +502,6 @@ private class AdwSpinRowComposeNode(gObject: AdwSpinRow) : LeafComposeNode<AdwSp
 fun SpinRow(
     value: Double,
     title: String,
-    subtitle: String,
     modifier: Modifier = Modifier,
     onActivate: () -> Unit = {},
     onValueChange: (Double) -> Unit = {},
@@ -517,6 +516,7 @@ fun SpinRow(
     titleSelectable: Boolean = false,
     useMarkup: Boolean = true,
     useUnderline: Boolean = false,
+    subtitle: String? = null,
     subtitleLines: Int = 0,
     subtitleSelectable: Boolean = false,
     titleLines: Int = 0,
@@ -565,12 +565,12 @@ fun SpinRow(
             set(numeric) { this.widget.numeric = it }
         },
         title = title,
-        subtitle = subtitle,
         modifier = modifier,
         activatable = activatable,
         titleSelectable = titleSelectable,
         useMarkup = useMarkup,
         useUnderline = useUnderline,
+        subtitle = subtitle,
         subtitleLines = subtitleLines,
         subtitleSelectable = subtitleSelectable,
         titleLines = titleLines,
