@@ -10,5 +10,9 @@
     <file preprocess="xml-stripblanks" alias="left-small-symbolic.svg">icons/left-small-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="right-small-symbolic.svg">icons/right-small-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="bread-symbolic.svg">icons/bread-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="speaker-0-symbolic.svg">icons/speaker-0-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="speaker-1-symbolic.svg">icons/speaker-1-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="speaker-2-symbolic.svg">icons/speaker-2-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="speaker-3-symbolic.svg">icons/speaker-3-symbolic.svg</file>
   </gresource>
 </gresources>
