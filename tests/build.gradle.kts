@@ -5,8 +5,15 @@ plugins {
     application
 }
 
-kotlin {
-    jvmToolchain(22)
+dependencies {
+    implementation(project(":lib:core"))
+    implementation(project(":lib:gtk"))
+    implementation(project(":lib:adw"))
+    implementation(libs.slf4j.api)
+    implementation(libs.slf4j.simple)
+    implementation(libs.kotlin.logging)
+    detektPlugins(libs.detekt.formatting)
+    detektPlugins(libs.detekt.compose)
 }
 
 repositories {
@@ -14,23 +21,12 @@ repositories {
     google()
 }
 
-dependencies {
-    implementation(project(":lib:core"))
-    implementation(project(":lib:gtk"))
-    implementation(project(":lib:adw"))
-    implementation(libs.slf4j.api)
-    implementation(libs.slf4j.simple)
-    detektPlugins(libs.detekt.formatting)
-    detektPlugins(libs.detekt.compose)
+kotlin {
+    jvmToolchain(22)
 }
 
 tasks.named("assemble") {
     dependsOn("compileGResources")
-}
-
-detekt {
-    config.setFrom(file("../config/detekt/detekt.yml"))
-    buildUponDefaultConfig = true
 }
 
 tasks.register<Exec>("compileGResources") {
@@ -40,4 +36,8 @@ tasks.register<Exec>("compileGResources") {
 
 tasks.named("processResources") {
     dependsOn("compileGResources")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }

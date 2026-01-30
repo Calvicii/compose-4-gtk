@@ -10,6 +10,9 @@ versioning = "6.4.4"
 detekt = "1.23.8"
 detekt-formatting = "1.23.8"
 detekt-compose = "0.4.27"
+runtime-desktop = "1.10.1"
+runtime-android = "1.10.1"
+runtime-jvmstubs = "1.8.3"
 
 [libraries]
 javagi-gtk = { group = "org.java-gi", name = "gtk", version.ref = "javagi" }
@@ -20,6 +23,9 @@ slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j"}
 slf4j-simple = { group = "org.slf4j", name = "slf4j-simple", version.ref = "slf4j"}
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt-formatting"}
 detekt-compose = { group = "io.nlopez.compose.rules", name = "detekt", version.ref = "detekt-compose"}
+runtime-desktop = { group = "androidx.compose.runtime", name = "runtime-desktop", version.ref = "runtime-desktop" }
+runtime-android = { group = "androidx.compose.runtime", name = "runtime-android", version.ref = "runtime-android" }
+runtime-jvmstubs = { group = "androidx.compose.runtime", name = "runtime-jvmstubs", version.ref = "runtime-jvmstubs" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

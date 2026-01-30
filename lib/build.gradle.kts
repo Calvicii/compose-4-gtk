@@ -11,11 +11,14 @@ plugins {
     alias(libs.plugins.detekt)
 }
 
-repositories {
-    mavenCentral()
-    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-    google()
+allprojects {
+    repositories {
+        mavenCentral()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        google()
+    }
 }
+
 
 group = "io.github.compose4gtk"
 version = "0.0-SNAPSHOT"
@@ -40,19 +43,6 @@ kotlin {
 java {
     sourceCompatibility = JavaVersion.VERSION_22
     targetCompatibility = JavaVersion.VERSION_22
-}
-
-dependencies {
-    api(compose.runtime)
-    api(libs.javagi.gtk)
-    api(libs.javagi.adw)
-    api(libs.kotlinx.datetime)
-    implementation(libs.kotlin.logging)
-    implementation(libs.slf4j.api)
-    detektPlugins(libs.detekt.formatting)
-    detektPlugins(libs.detekt.compose)
-
-    testImplementation(libs.slf4j.simple)
 }
 
 val readMeToDocIndexTask = tasks.register<Copy>("readmeToDocIndex") {
@@ -191,16 +181,6 @@ tasks.named("publish") {
 tasks.named("jreleaserFullRelease") {
     dependsOn("publish")
 }
-
-tasks.register<Exec>("compileTestGResources") {
-    workingDir("src/test/gresources")
-    commandLine("glib-compile-resources", "--target=../resources/resources.gresource", "resources.gresource.xml")
-}
-
-tasks.named("assembleTestResources") {
-    dependsOn("compileTestGResources")
-}
-
 detekt {
     config.setFrom(file("../config/detekt/detekt.yml"))
     buildUponDefaultConfig = true
